@@ -1,5 +1,7 @@
 package com.library.book;
 
+import com.library.ItemNotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,8 @@ public class BookService {
 
     private static final BookAccessor bookAccessor = new BookAccessor();
     private static final BookMapper bookMapper = new BookMapper();
+
+    private static final String ID_NOT_FOUND_EXCEPTION="Item with ID %d was not found.";
 
     public List<Book> getAllBooks() {
         List<String> bookStrings = bookAccessor.readAllBooks();
@@ -26,7 +30,7 @@ public class BookService {
 
     }
 
-    public void editBook(int id, String title, String author, String date) {
+    public void editBook(int id, String title, String author, String date) throws ItemNotFoundException {
         /*
         List<Book> books=getAllBooks();
         if (books.size()<id || id<1){
@@ -46,8 +50,8 @@ public class BookService {
             }
 
          */
-        List<Book> books=getAllBooks();
-        Book bookToEdit = getBookByIDFromTheList(id,books);
+        List<Book> books = getAllBooks();
+        Book bookToEdit = getBookByIDFromTheList(id, books);
         if (bookToEdit == null) {
             return;
         }
@@ -55,7 +59,10 @@ public class BookService {
         bookToEdit.setTitle(title);
         bookToEdit.setAuthor(author);
         bookToEdit.setDate(date);
+        String bookString = bookMapper.mapBookListToString(books);
+        bookAccessor.overWriteFile(bookString.toString());
 
+        /*
         StringBuilder stringBuilder = new StringBuilder();
 
         for (Book book : books) {
@@ -63,23 +70,29 @@ public class BookService {
             stringBuilder.append(itemString).append("\n");
         }
         bookAccessor.overWriteFile(stringBuilder.toString());
+
+         */
     }
 
-    public void deleteBook(int id) {
-         List<Book> books = getAllBooks();
-         Book bookToRemove= getBookByIDFromTheList(id,books);
-         books.remove(bookToRemove);
-         bookAccessor.
+    public void deleteBook (int id) throws ItemNotFoundException {
+        List<Book> books = getAllBooks();
+        Book bookToRemove = getBookByIDFromTheList(id, books);
+        books.remove(bookToRemove);
+        for (int i = bookToRemove.getBookId()-1; i<books.size();i++) {
+                 books.get(i).setBookId(i+1);
+        }
+        String bookString = bookMapper.mapBookListToString(books);
+        bookAccessor.overWriteFile(bookString);
 
     }
 
 
-    private Book getBookByIDFromTheList(int id,List<Book> books) {
+    private Book getBookByIDFromTheList(int id, List<Book> books) throws ItemNotFoundException {
 
 
-        if (books.size() < id || id < 1) {
-            System.out.println("The ID doesn't exist.");
-            return null;
+        if (books.size() <= id || id < 1) {
+
+            throw  new ItemNotFoundException(String.format(ID_NOT_FOUND_EXCEPTION,id));
         }
         Book book = null;
         for (Book bookInTheList : books) {
@@ -87,6 +100,9 @@ public class BookService {
                 book = bookInTheList;
                 break;
             }
+        }
+        if (book==null){
+            throw  new ItemNotFoundException(String.format(ID_NOT_FOUND_EXCEPTION,id));
         }
         return book;
 
