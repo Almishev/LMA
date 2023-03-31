@@ -14,10 +14,10 @@ public class Validator {
     public String validateId() {
         String bookId;
         while (true) {
-            System.out.println("Enter Book ID ");
+            System.out.println("ENTER READER ID ");
             bookId = sc.nextLine();
             if (!ID_PATTERN.matcher(bookId).matches()) {
-                System.out.println(RED+"SORRY ! PLEASE ENTER VALID BOOK ID "+RESET);
+                System.out.println(RED+"SORRY ! PLEASE ENTER VALID READER ID "+RESET);
             } else {
                 break;
             }
@@ -29,8 +29,11 @@ public class Validator {
         while (true){
             if(input.equals("Title")){
                 System.out.println("Enter Title");
-            }else{
+            }else if(input.equals("Author")){
                 System.out.println("Enter Author");
+            }
+            else{
+                System.out.println("Enter NAME");
             }
             result=sc.nextLine();
             if(!AuthorTitle_Pattern.matcher(result).matches()){

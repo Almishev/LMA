@@ -1,17 +1,15 @@
 package com.library.book;
 
-import com.library.ItemNotFoundException;
+import com.library.exception.ItemNotFoundException;
 import com.library.book.util.ConsoleRangeReader;
-import com.library.book.util.ConsoleReading;
 import com.library.book.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BookPresenter {
 
     private static final BookService bookService=new BookService();
-    Validator validator = new Validator();
+    private static final Validator validator = new Validator();
     private static final String BOOK_TITLE_PROMPT="Enter book title";
     private static final String BOOK_AUTHOR_PROMPT="Enter author name";
     private static final String BOOK_DATE_PROMPT="Enter date of publishing __/__/__";

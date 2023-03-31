@@ -1,7 +1,9 @@
-package com.library.book;
+package com.library;
 
+import com.library.book.BookPresenter;
 import com.library.book.util.ConsoleRangeReader;
 import com.library.book.util.ConsoleReading;
+import com.library.reader.ReaderPresenter;
 
 import java.util.Scanner;
 
@@ -15,6 +17,7 @@ public class Main {
     private static final int MIN_MENU=1;
     private static final int MAX_MENU=3;
     private static final BookPresenter bookPresenter=new BookPresenter();
+    private static final ReaderPresenter readerPresenter=new ReaderPresenter();
 
     public static void main(String[] args) {
 
@@ -27,7 +30,7 @@ public class Main {
                     bookPresenter.showBookMenu();
                     break;
                 case 2:
-                    System.out.println(PLACEHOLDER_1);
+                    readerPresenter.showReaderMenu();
                     break;
                 case 3:
                     System.out.println(PLACEHOLDER_2);

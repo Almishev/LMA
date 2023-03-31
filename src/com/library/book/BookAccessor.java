@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class BookAccessor {
 
-    private static final String BOOKS_FILE_PATH = "C:\\Users\\Admin\\Desktop\\book.txt";
+    private static final String BOOKS_FILE_PATH = "src/book.txt";
     private static final String FILE_NOT_FOUND_MESSAGE="File not found with path "+BOOKS_FILE_PATH;
 
 
