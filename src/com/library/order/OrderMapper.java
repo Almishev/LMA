@@ -3,6 +3,8 @@ package com.library.order;
 import com.library.book.Book;
 import com.library.reader.Reader;
 
+import java.util.List;
+
 public class OrderMapper {
 
     public Order mapStringToOrder(String string){
@@ -43,5 +45,14 @@ public class OrderMapper {
         String date = order.getBook().getDate();
         return String.join("_",Integer.toString(orderId),Integer.toString(readerId),name,Integer.toString(bookId),
                 title, author,date);
+    }
+
+    public String mapOrderListToString(List<Order> orderList){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Order order:orderList) {
+            String bookString = mapOrderToString(order);
+            stringBuilder.append(bookString).append("\n");
+        }
+        return stringBuilder.toString();
     }
 }

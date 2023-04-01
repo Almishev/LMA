@@ -14,7 +14,7 @@ public class Validator {
     public String validateId() {
         String bookId;
         while (true) {
-            System.out.println("ENTER READER ID ");
+            System.out.println("ENTER ID ");
             bookId = sc.nextLine();
             if (!ID_PATTERN.matcher(bookId).matches()) {
                 System.out.println(RED+"SORRY ! PLEASE ENTER VALID READER ID "+RESET);

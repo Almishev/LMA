@@ -2,6 +2,7 @@ package com.library.order;
 
 import com.library.book.Book;
 import com.library.book.BookMapper;
+import com.library.exception.ItemNotFoundException;
 import com.library.reader.Reader;
 
 import java.util.ArrayList;
@@ -31,6 +32,37 @@ public class OrderService {
         String orderString = orderMapper.mapOrderToString(order);
         orderAccessor.makeOrder(orderString);
     }
+
+    public void deleteOrder (int id) throws ItemNotFoundException {
+        List<Order> orders = showAllOrders();
+        Order orderToRemove = getOrderByIDFromTheList(id, orders);
+        orders.remove(orderToRemove);
+        for (int i = orderToRemove.getOrderId()-1; i<orders.size();i++) {
+            orders.get(i).setOrderId(i+1);
+        }
+        String bookString = orderMapper.mapOrderListToString(orders);
+        orderAccessor.overWriteFile(bookString);
+    }
+    public Order getOrderByIDFromTheList(int id, List<Order> orders) throws ItemNotFoundException {
+
+        if (orders.size() <= id || id < 1) {
+
+            throw  new ItemNotFoundException(String.format(ID_NOT_FOUND_EXCEPTION,id));
+        }
+        Order order = null;
+        for (Order orderInTheList : orders) {
+            if (orderInTheList.getOrderId() == id) {
+                order = orderInTheList;
+                break;
+            }
+        }
+        if (order==null){
+            throw  new ItemNotFoundException(String.format(ID_NOT_FOUND_EXCEPTION,id));
+        }
+        return order;
+
+    }
+
 
 
 

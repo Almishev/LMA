@@ -20,9 +20,9 @@ public class OrderPresenter {
     private static final BookService bookService = new BookService();
 
     private static final String OPTIONS_MESSAGE = "Choose what to the with ORDERS: \n" +
-            "1. Read all ORDERS\n2. Make ORDER\n0. BACK";
+            "1. Read all ORDERS\n2. Make ORDER\n3. Delete ORDER\n0. BACK";
     private static final int MIN_MENU_OPTION=0;
-    private static final int MAX_MENU_OPTION=2;
+    private static final int MAX_MENU_OPTION=3;
 
 
 
@@ -36,6 +36,9 @@ public class OrderPresenter {
                 break;
             case 2:
                 makeANewOrder();
+                break;
+            case 3 :
+                deleteOrder();
                 break;
 
             case 0:
@@ -106,5 +109,14 @@ public class OrderPresenter {
         orderService.makeOrder(reader,book);
 
     }
+
+     public void deleteOrder(){
+         String id=validator.validateId();
+         try {
+             orderService.deleteOrder(Integer.parseInt(id));
+         } catch (ItemNotFoundException e) {
+             System.out.println(e.getMessage());
+         }
+   }
 
 }
