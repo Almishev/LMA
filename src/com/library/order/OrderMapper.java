@@ -31,4 +31,17 @@ public class OrderMapper {
         Book b = new Book(bookId,title,author,date);
         return new Order(orderId,r,b);
     }
+
+    public String mapOrderToString(Order order){
+
+        int orderId=order.getOrderId();
+        int readerId = order.getReader().getReaderId();
+        int bookId=order.getBook().getBookId();
+        String name=order.getReader().getName();
+        String title = order.getBook().getTitle();
+        String author=order.getBook().getAuthor();
+        String date = order.getBook().getDate();
+        return String.join("_",Integer.toString(orderId),Integer.toString(readerId),name,Integer.toString(bookId),
+                title, author,date);
+    }
 }

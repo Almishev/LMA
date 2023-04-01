@@ -2,6 +2,7 @@ package com.library.order;
 
 import com.library.book.Book;
 import com.library.book.BookMapper;
+import com.library.reader.Reader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,16 @@ public class OrderService {
         }
         return orders;
     }
+
+    public void makeOrder(Reader reader, Book book)  {
+        int id = orderAccessor.showAllOrders().size() + 1;
+        Order order = new Order(id,reader,book);
+        String orderString = orderMapper.mapOrderToString(order);
+        orderAccessor.makeOrder(orderString);
+    }
+
+
+
 
 
 

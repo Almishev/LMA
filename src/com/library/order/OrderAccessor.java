@@ -1,8 +1,6 @@
 package com.library.order;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,5 +19,14 @@ public class OrderAccessor {
         catch(IOException e){
             throw new RuntimeException("File not found with path " + READERS_FILE_PATH, e);
         }
+    }
+
+    public void makeOrder(String string ){
+        try (BufferedWriter writer=new BufferedWriter(new FileWriter(READERS_FILE_PATH,true))) {
+            writer.write(string+" \n");
+        } catch (IOException e) {
+            throw new RuntimeException(FILE_NOT_FOUND_MESSAGE,e);
+        }
+
     }
 }

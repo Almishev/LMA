@@ -46,7 +46,7 @@ public class ReaderService {
 
     }
 
-    private Reader getReaderByIDFromTheList(int id, List<Reader> readers) throws ItemNotFoundException {
+    public Reader getReaderByIDFromTheList(int id, List<Reader> readers) throws ItemNotFoundException {
 
 
         if (readers.size() <= id || id < 1) {

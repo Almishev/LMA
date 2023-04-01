@@ -18,5 +18,7 @@ Choose what to the with the reader:
    4.Delete reader  
    0.BACK
 3:
-Choose what to the with the orders: 
+Choose what to the with ORDERS:
+ 1.Read all ORDERS 
+ 2.BACK 
    

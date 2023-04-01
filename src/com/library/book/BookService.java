@@ -27,7 +27,6 @@ public class BookService {
         Book book = new Book(id, title, author, date);
         String bookString = bookMapper.mapBookToString(book);
         bookAccessor.addBook(bookString);
-
     }
 
     public void editBook(int id, String title, String author, String date) throws ItemNotFoundException {
@@ -87,7 +86,7 @@ public class BookService {
     }
 
 
-    private Book getBookByIDFromTheList(int id, List<Book> books) throws ItemNotFoundException {
+      public Book getBookByIDFromTheList(int id, List<Book> books) throws ItemNotFoundException {
 
 
         if (books.size() <= id || id < 1) {

@@ -47,9 +47,11 @@ public class Order {
 //   public void setOrder(List<Book> order) {this.order = order;}
 
    public void printOrders(){
-      System.out.printf("%-5s%-10s%-21s%-10s%-21s%20s%20s\n",orderId,reader.getReaderId(),reader.getName(),book.getBookId(),
+      System.out.printf("%-10s%-10s%-21s%-10s%-21s%20s%20s\n",orderId,reader.getReaderId(),reader.getName(),book.getBookId(),
               book.getTitle(),book.getAuthor(),book.getDate());
    }
+
+
 
 /*
    public Order() {
