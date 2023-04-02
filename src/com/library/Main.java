@@ -1,8 +1,7 @@
 package com.library;
 
 import com.library.book.BookPresenter;
-import com.library.book.util.ConsoleRangeReader;
-import com.library.book.util.ConsoleReading;
+import com.library.util.ConsoleRangeReader;
 import com.library.order.OrderPresenter;
 import com.library.reader.ReaderPresenter;
 

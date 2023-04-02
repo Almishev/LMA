@@ -1,4 +1,6 @@
 1_2_Nikola Delchev_9_Parrot Of Humor_Annie Anson_13/02/2010
 2_3_Nina Almisheva_6_Snakes Without Eyes_J. C. Northcott_15/07/2003 
 3_5_Betty Jonsan_8_Officer Program_R. V. Raymonds_22/06/1996 
-4_4_John Travolta_3_Angel In The Forest_J. C. Noziz_08/09/2011 
+4_4_John Travolta_3_Angel In The Forest_J. C. Noziz_08/09/2011
+5_1_Anton Almishev_1_Robots Without Flaws_Annie Anson_12/04/2010 
+6_1_Anton Almishev_5_Horses At The Crypts_J. C. Noziz_22/12/1998 

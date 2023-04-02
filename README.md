@@ -20,5 +20,8 @@ Choose what to the with the reader:
 3:
 Choose what to the with ORDERS:
  1.Read all ORDERS 
- 2.BACK 
+ 2.Make ORDER 
+ 3.Delete ORDER
+ 4.Get Orders BY READER ID
+ 0.BACK 
    

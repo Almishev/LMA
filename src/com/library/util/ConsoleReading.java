@@ -1,7 +1,6 @@
-package com.library.book.util;
+package com.library.util;
 
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 
 public final class ConsoleReading {

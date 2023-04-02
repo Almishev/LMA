@@ -43,6 +43,7 @@ public class OrderService {
         String bookString = orderMapper.mapOrderListToString(orders);
         orderAccessor.overWriteFile(bookString);
     }
+
     public Order getOrderByIDFromTheList(int id, List<Order> orders) throws ItemNotFoundException {
 
         if (orders.size() <= id || id < 1) {
@@ -60,6 +61,36 @@ public class OrderService {
             throw  new ItemNotFoundException(String.format(ID_NOT_FOUND_EXCEPTION,id));
         }
         return order;
+
+    }
+
+    public List<Order> getOrderByReaderIDFromTheList(int id, List<Order> orders,List<Reader> readers) throws ItemNotFoundException {
+          List<Order> searchingOrders=new ArrayList<>();
+        if (readers.size() <= id || id < 1) {
+
+            throw  new ItemNotFoundException(String.format(ID_NOT_FOUND_EXCEPTION,id));
+        }
+        for (Order order : orders) {
+            if (order.getReader().getReaderId() == id) {
+                searchingOrders.add(order);
+            }
+        }
+
+        /*
+        Reader reader = null;
+        for (Reader readerInTheList : readers) {
+            if (readerInTheList.getReaderId() == id) {
+                reader = readerInTheList;
+                break;
+            }
+        }
+        if (reader==null){
+            throw  new ItemNotFoundException(String.format(ID_NOT_FOUND_EXCEPTION,id));
+        }
+
+         */
+
+         return searchingOrders;
 
     }
 

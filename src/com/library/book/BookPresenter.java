@@ -1,8 +1,8 @@
 package com.library.book;
 
 import com.library.exception.ItemNotFoundException;
-import com.library.book.util.ConsoleRangeReader;
-import com.library.book.util.Validator;
+import com.library.util.ConsoleRangeReader;
+import com.library.util.Validator;
 
 import java.util.List;
 

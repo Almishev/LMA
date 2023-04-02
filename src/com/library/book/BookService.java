@@ -13,7 +13,7 @@ public class BookService {
     private static final String ID_NOT_FOUND_EXCEPTION="Item with ID %d was not found.";
 
     public List<Book> getAllBooks() {
-        List<String> bookStrings = bookAccessor.readAllBooks();
+        List<String> bookStrings = bookAccessor.readAll();
         List<Book> books = new ArrayList<>();
         for (String bookString : bookStrings) {
             Book book = bookMapper.mapStringToBook(bookString);
@@ -23,10 +23,10 @@ public class BookService {
     }
 
     public void addBook(String title, String author, String date) {
-        int id = bookAccessor.readAllBooks().size() + 1;
+        int id = bookAccessor.readAll().size() + 1;
         Book book = new Book(id, title, author, date);
         String bookString = bookMapper.mapBookToString(book);
-        bookAccessor.addBook(bookString);
+        bookAccessor.add(bookString);
     }
 
     public void editBook(int id, String title, String author, String date) throws ItemNotFoundException {

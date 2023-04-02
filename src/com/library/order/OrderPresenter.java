@@ -2,12 +2,13 @@ package com.library.order;
 
 import com.library.book.Book;
 import com.library.book.BookService;
-import com.library.book.util.ConsoleRangeReader;
-import com.library.book.util.Validator;
+import com.library.util.ConsoleRangeReader;
+import com.library.util.Validator;
 import com.library.exception.ItemNotFoundException;
 import com.library.reader.Reader;
 import com.library.reader.ReaderService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,9 +21,9 @@ public class OrderPresenter {
     private static final BookService bookService = new BookService();
 
     private static final String OPTIONS_MESSAGE = "Choose what to the with ORDERS: \n" +
-            "1. Read all ORDERS\n2. Make ORDER\n3. Delete ORDER\n0. BACK";
+            "1. Read all ORDERS\n2. Make ORDER\n3. Delete ORDER\n4.Get Orders BY READER ID\n0. BACK";
     private static final int MIN_MENU_OPTION=0;
-    private static final int MAX_MENU_OPTION=3;
+    private static final int MAX_MENU_OPTION=4;
 
 
 
@@ -40,6 +41,8 @@ public class OrderPresenter {
             case 3 :
                 deleteOrder();
                 break;
+            case 4:
+                getOrderByReaderID();
 
             case 0:
                 return;
@@ -118,5 +121,27 @@ public class OrderPresenter {
              System.out.println(e.getMessage());
          }
    }
+
+   public void getOrderByReaderID(){
+        String id = validator.validateId();
+        List<Order> orders= orderService.showAllOrders();
+        List<Reader> readers=readerService.getAllReaders();
+        List<Order> searchOrders=new ArrayList<>();
+
+       try {
+          searchOrders= orderService.getOrderByReaderIDFromTheList(Integer.parseInt(id),orders,readers);
+       } catch (ItemNotFoundException e) {
+           throw new RuntimeException(e);
+       }
+       for (Order searchOrder : searchOrders) {
+           searchOrder.printOrders();
+       }
+
+
+   }
+
+
+
+
 
 }

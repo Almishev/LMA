@@ -1,4 +1,4 @@
-package com.library.book.util;
+package com.library.util;
 
 public final class ConsoleRangeReader {
 
