@@ -10,12 +10,14 @@ public class Order {
    private Reader reader;
    private Book book;
  //  private List<Book> order = new ArrayList<>();
+   private String orderingDate ;
 
 
-   public Order(int orderId, Reader reader, Book book) {
+   public Order(int orderId, Reader reader, Book book,String date) {
       this.orderId=orderId;
       this.reader=reader;
       this.book=book;
+      this.orderingDate=date;
    }
 
    public  int getOrderId() {
@@ -42,13 +44,20 @@ public class Order {
       this.book = book;
    }
 
-  // public List<Book> getOrder() {return order;}
+    public String getOrderingDate() {
+        return orderingDate;
+    }
+
+    public void setOrderingDate(String date) {
+        this.orderingDate = date;
+    }
+    // public List<Book> getOrder() {return order;}
 
 //   public void setOrder(List<Book> order) {this.order = order;}
 
    public void printOrders(){
-      System.out.printf("%-10s%-10s%-21s%-10s%-21s%20s%20s\n",orderId,reader.getReaderId(),reader.getName(),book.getBookId(),
-              book.getTitle(),book.getAuthor(),book.getDate());
+      System.out.printf("%-10s%-10s%-21s%-10s%-21s%20s%20s%19s\n",orderId,reader.getReaderId(),reader.getName(),book.getBookId(),
+              book.getTitle(),book.getAuthor(),book.getDate(),orderingDate);
    }
 
 

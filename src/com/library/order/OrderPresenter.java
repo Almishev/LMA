@@ -57,7 +57,7 @@ public class OrderPresenter {
 
     public void showAllOrders(){
         System.out.println("\n----------------------------------------------------------------------------------------------");
-        System.out.format("%-12s%-15s%-21s%-10s%-17s%15s%20s","ORDERID","READERID","READERNAME" ,"BOOKID","TITLE","AUTHOR","PUBLISH YEAR");
+        System.out.format("%-12s%-15s%-21s%-10s%-17s%15s%20s,%20s","ORDERID","READERID","READERNAME" ,"BOOKID","TITLE","AUTHOR","PUBLISH YEAR","ORDERED AT");
         System.out.println("\n----------------------------------------------------------------------------------------------");
 
         List<Order> orders=orderService.showAllOrders();
@@ -72,6 +72,7 @@ public class OrderPresenter {
     }
 
     public void makeANewOrder()  {
+
         boolean isMaiden=false;
         List<Order> orders=orderService.showAllOrders();
 
@@ -85,8 +86,10 @@ public class OrderPresenter {
 
         int readerId = ConsoleRangeReader.readInt(1,readers.size());
 
+
         Reader reader;
         try {
+
             reader = readerService.getReaderByIDFromTheList(readerId,readers);
         } catch (ItemNotFoundException e) {
             throw new RuntimeException(e.getMessage());
@@ -100,25 +103,33 @@ public class OrderPresenter {
         System.out.println();
 
         int bookId=ConsoleRangeReader.readInt(0,books.size());
-        Book book;
-        try {
-            book = bookService.getBookByIDFromTheList(bookId,books);
-        } catch (ItemNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        for (Order order : orders) {
-            if (order.getReader().getReaderId() == readerId && order.getBook().getBookId() == bookId) {
-                isMaiden = true;
-                break;
-            }
 
+        if(orderService.isTheBookFree(bookId)) {
+
+            Book book;
+            try {
+
+                book = bookService.getBookByIDFromTheList(bookId, books);
+            } catch (ItemNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            for (Order order : orders) {
+                if (order.getReader().getReaderId() == readerId && order.getBook().getBookId() == bookId) {
+                    isMaiden = true;
+                    break;
+                }
+
+            }
+            if (!isMaiden) {
+                orderService.makeOrder(reader, book);
+                System.out.println("Successful accepted order.");
+            } else {
+                System.out.println("The order already exist.");
+            }
         }
-      if(!isMaiden) {
-          orderService.makeOrder(reader, book);
-          System.out.println("Successful accepted order.");
-      } else{
-          System.out.println("The order already exist.");
-      }
+        else {
+            System.out.println("This book is still reading from somebody else.");
+        }
 
     }
 
@@ -135,7 +146,7 @@ public class OrderPresenter {
         String id = validator.validateId();
         List<Order> orders= orderService.showAllOrders();
         List<Reader> readers=readerService.getAllReaders();
-        List<Order> searchOrders=new ArrayList<>();
+        List<Order> searchOrders;
 
        try {
           searchOrders= orderService.getOrderByReaderIDFromTheList(Integer.parseInt(id),orders,readers);
@@ -165,7 +176,6 @@ public class OrderPresenter {
        } catch (ItemNotFoundException e) {
            System.out.println(e.getMessage());
        }
-
 
    }
    }

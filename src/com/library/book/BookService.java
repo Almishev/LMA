@@ -23,7 +23,7 @@ public class BookService {
     }
 
     public void addBook(String title, String author, String date) {
-        int id = bookAccessor.readAll().size() + 1;
+        int id = bookAccessor.readAll().size() ;
         Book book = new Book(id, title, author, date);
         String bookString = bookMapper.mapBookToString(book);
         bookAccessor.add(bookString);

@@ -2,16 +2,21 @@ package com.library.order;
 
 import com.library.book.Book;
 import com.library.book.BookMapper;
+import com.library.book.BookService;
 import com.library.exception.ItemNotFoundException;
 import com.library.reader.Reader;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 public class OrderService {
     private static final OrderAccessor orderAccessor = new OrderAccessor();
     private static final OrderMapper orderMapper = new OrderMapper();
+    private static BookService bookService= new BookService();
 
     private static final String ID_NOT_FOUND_EXCEPTION="Order with ID %d was not found.";
 
@@ -28,7 +33,7 @@ public class OrderService {
 
     public void makeOrder(Reader reader, Book book)  {
         int id = orderAccessor.showAllOrders().size() + 1;
-        Order order = new Order(id,reader,book);
+        Order order = new Order(id,reader,book,getSysdateAsString());
         String orderString = orderMapper.mapOrderToString(order);
         orderAccessor.makeOrder(orderString);
     }
@@ -108,6 +113,22 @@ public class OrderService {
         String readerString = orderMapper.mapOrderListToString(orders);
         orderAccessor.overWriteFile(readerString.toString());
 
+    }
+
+    public String getSysdateAsString(){
+        Date thisDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
+        return dateFormat.format(thisDate);
+    }
+
+    public boolean isTheBookFree(int id){
+        List<Order> orders = showAllOrders();
+        for (Order order : orders) {
+            if (order.getBook().getBookId()==id&&order.getOrderingDate().equals(getSysdateAsString())) {
+                return false;
+            }
+        }
+        return true;
     }
 
 

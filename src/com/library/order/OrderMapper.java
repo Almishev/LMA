@@ -16,6 +16,7 @@ public class OrderMapper {
         String title=tokens[4];
         String author=tokens[5];
         String date =tokens[6];
+        String orderDate=tokens[7];
 
         try {
            orderId=Integer.parseInt(tokens[0]);
@@ -31,7 +32,7 @@ public class OrderMapper {
         }
         Reader r = new Reader(readerId,name);
         Book b = new Book(bookId,title,author,date);
-        return new Order(orderId,r,b);
+        return new Order(orderId,r,b,orderDate);
     }
 
     public String mapOrderToString(Order order){
@@ -43,8 +44,9 @@ public class OrderMapper {
         String title = order.getBook().getTitle();
         String author=order.getBook().getAuthor();
         String date = order.getBook().getDate();
+        String orderDate=order.getOrderingDate();
         return String.join("_",Integer.toString(orderId),Integer.toString(readerId),name,Integer.toString(bookId),
-                title, author,date);
+                title, author,date,orderDate);
     }
 
     public String mapOrderListToString(List<Order> orderList){
