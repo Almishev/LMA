@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public class OrderAccessor {
 
 
-    private static final String ORDER_FILE_PATH = "src/orders.txt";
+    private static final String ORDER_FILE_PATH = "LMA/src/orders.txt";
     private static final String FILE_NOT_FOUND_MESSAGE="File not found with path "+ORDER_FILE_PATH;
 
     public List<String> showAllOrders(){

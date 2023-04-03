@@ -72,6 +72,8 @@ public class OrderPresenter {
     }
 
     public void makeANewOrder()  {
+        boolean isMaiden=false;
+        List<Order> orders=orderService.showAllOrders();
 
         System.out.println("Please select  reader ID : ");
 
@@ -104,8 +106,19 @@ public class OrderPresenter {
         } catch (ItemNotFoundException e) {
             throw new RuntimeException(e);
         }
+        for (Order order : orders) {
+            if (order.getReader().getReaderId() == readerId && order.getBook().getBookId() == bookId) {
+                isMaiden = true;
+                break;
+            }
 
-        orderService.makeOrder(reader,book);
+        }
+      if(!isMaiden) {
+          orderService.makeOrder(reader, book);
+          System.out.println("Successful accepted order.");
+      } else{
+          System.out.println("The order already exist.");
+      }
 
     }
 

@@ -41,12 +41,24 @@ public class ReaderPresenter {
         }
 
     }
-    public void addReader(){
+    public void addReader() {
 
-        String reader= validator.validateAuthorTitle("Reader");
+        String reader = validator.validateAuthorTitle("Reader");
+        List<Reader> readers = readerService.getAllReaders();
+        boolean isHere = false;
+        for (int i = 0; i < readers.size(); i++) {
+            if (readers.get(i).getName().equals(reader)) {
+                isHere = true;
+                break;
+            }
 
-        readerService.addReader(reader);
-
+        }
+        if (isHere) {
+            System.out.println(reader+" is here before.");
+        } else{
+            readerService.addReader(reader);
+            System.out.println("Successful adding "+reader);
+        }
     }
 
     public void printAllReaders(){
@@ -78,12 +90,20 @@ public class ReaderPresenter {
 
     }
     public void deleteReader(){
-        String id=validator.validateId();
+        int max=readerService.getAllReaders().size();
+        System.out.println("Input reader ID: \nDelete:");
+        List<Reader> readers=readerService.getAllReaders();
+        for (int i = 0; i < readers.size() ; i++) {
+            System.out.println(i+1 + " for "+readers.get(i).getName() );
+        }
+
+        int id= ConsoleRangeReader.readInt(1,max);
         try {
-            readerService.deleteReader(Integer.parseInt(id));
+            readerService.deleteReader(id);
         } catch (ItemNotFoundException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("Deleting successful");
 
     }
 }

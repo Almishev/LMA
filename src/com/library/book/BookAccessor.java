@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class BookAccessor extends AccessorCRUDAble<Book> {
 
-    private static final String BOOKS_FILE_PATH = "src/book.txt";
+    private static final String BOOKS_FILE_PATH = "LMA/src/book.txt";
     private static final String FILE_NOT_FOUND_MESSAGE="File not found with path "+BOOKS_FILE_PATH;
 
     @Override

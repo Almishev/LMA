@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 public class ReaderAccessor {
 
-    private static final String READERS_FILE_PATH = "src/reader.txt";
+    private static final String READERS_FILE_PATH = "LMA/src/reader.txt";
     private static final String FILE_NOT_FOUND_MESSAGE="File not found with path "+READERS_FILE_PATH;
 
     public List<String> readAllReaders(){
