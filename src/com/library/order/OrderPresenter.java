@@ -21,9 +21,9 @@ public class OrderPresenter {
     private static final BookService bookService = new BookService();
 
     private static final String OPTIONS_MESSAGE = "Choose what to the with ORDERS: \n" +
-            "1. Read all ORDERS\n2. Make ORDER\n3. Delete ORDER\n4.Get Orders BY READER ID\n0. BACK";
+            "1. Read all ORDERS\n2. Make ORDER\n3. Delete ORDER\n4.Get Orders BY READER ID\n5.Edit ORDER\n0. BACK";
     private static final int MIN_MENU_OPTION=0;
-    private static final int MAX_MENU_OPTION=4;
+    private static final int MAX_MENU_OPTION=5;
 
 
 
@@ -43,6 +43,10 @@ public class OrderPresenter {
                 break;
             case 4:
                 getOrderByReaderID();
+                break;
+            case 5:
+                editOrder();
+                break;
 
             case 0:
                 return;
@@ -72,16 +76,12 @@ public class OrderPresenter {
         System.out.println("Please select  reader ID : ");
 
         List<Reader> readers = readerService.getAllReaders();
-        for (int i = 0; i < readers.size()  ; i++) {
-            if(i<readers.size()-1) {
-                System.out.print(readers.get(i).getReaderId()+" for "+readers.get(i).getName() + ",");
-            } else{
-                System.out.print(readers.get(i).getReaderId()+" for "+readers.get(i).getName());
-            }
+        for (Reader value : readers) {
+            System.out.print(value.getReaderId() + " for " + value.getName() + ",");
         }
         System.out.println();
 
-        int readerId = ConsoleRangeReader.readInt(1,readers.size())-1;
+        int readerId = ConsoleRangeReader.readInt(1,readers.size());
 
         Reader reader;
         try {
@@ -92,16 +92,12 @@ public class OrderPresenter {
         System.out.println("Please select book ID : ");
 
         List<Book> books = bookService.getAllBooks();
-        for (int i = 0; i < books.size()  ; i++) {
-            if(i<readers.size()-1) {
-                System.out.print(books.get(i).getBookId() + " for "+books.get(i).getTitle()+",");
-            } else{
-                System.out.print(books.get(i).getBookId()+" for "+books.get(i).getTitle());
-            }
+        for (Book value : books) {
+            System.out.print(value.getBookId() + " for " + value.getTitle() + ",");
         }
         System.out.println();
 
-        int bookId=ConsoleRangeReader.readInt(1,books.size())-1;
+        int bookId=ConsoleRangeReader.readInt(0,books.size());
         Book book;
         try {
             book = bookService.getBookByIDFromTheList(bookId,books);
@@ -116,7 +112,7 @@ public class OrderPresenter {
      public void deleteOrder(){
          String id=validator.validateId();
          try {
-             orderService.deleteOrder(Integer.parseInt(id));
+             orderService.deleteOrder(Integer.parseInt(id)-1);
          } catch (ItemNotFoundException e) {
              System.out.println(e.getMessage());
          }
@@ -140,8 +136,28 @@ public class OrderPresenter {
 
    }
 
+   public void editOrder(){
+       String id=validator.validateId();
+       String bookId=validator.validateId();
+       List<Book> books = bookService.getAllBooks();
+       Book book = null;
+       try {
+           book = bookService.getBookByIDFromTheList(Integer.parseInt(bookId),books);
+       } catch (ItemNotFoundException e) {
+           throw new RuntimeException(e);
+       }
+
+       try {
+           orderService.editOrder(Integer.parseInt(id), book);
+       } catch (ItemNotFoundException e) {
+           System.out.println(e.getMessage());
+       }
+
+
+   }
+   }
 
 
 
 
-}
+

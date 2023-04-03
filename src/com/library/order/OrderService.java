@@ -94,6 +94,22 @@ public class OrderService {
 
     }
 
+    public void editOrder(int id, Book book) throws ItemNotFoundException {
+
+
+        List<Order> orders = showAllOrders();
+        Order orderToEdit = getOrderByIDFromTheList(id, orders);
+        if (orderToEdit == null) {
+            return;
+        }
+
+        orderToEdit.setBook(book);
+
+        String readerString = orderMapper.mapOrderListToString(orders);
+        orderAccessor.overWriteFile(readerString.toString());
+
+    }
+
 
 
 
