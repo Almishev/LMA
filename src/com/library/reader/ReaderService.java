@@ -13,7 +13,7 @@ public class ReaderService {
     private static final String ID_NOT_FOUND_EXCEPTION="Item with ID %d was not found.";
 
     public List<Reader> getAllReaders() {
-        List<String> readerStrings = readerAccessor.readAllReaders();
+        List<String> readerStrings = readerAccessor.readAll();
         List<Reader> readers = new ArrayList<>();
         for (String readerString : readerStrings) {
             Reader reader = readerMapper.mapStringToReader(readerString);
@@ -23,7 +23,7 @@ public class ReaderService {
     }
 
     public void addReader(String name) {
-        int id = readerAccessor.readAllReaders().size() + 1;
+        int id = readerAccessor.readAll().size() + 1;
         Reader reader = new Reader(id,name);
         String readerString = readerMapper.mapReaderToString(reader);
         readerAccessor.addNewReader(readerString);
@@ -37,6 +37,7 @@ public class ReaderService {
        Reader readerToEdit = getReaderByIDFromTheList(id, readers);
         if (readerToEdit == null) {
             return;
+
         }
 
         readerToEdit.setName(name);
@@ -49,7 +50,7 @@ public class ReaderService {
     public Reader getReaderByIDFromTheList(int id, List<Reader> readers) throws ItemNotFoundException {
 
 
-        if (readers.size() <= id || id < 1) {
+        if (readers.size()+1 <= id || id < 1) {
 
             throw  new ItemNotFoundException(String.format(ID_NOT_FOUND_EXCEPTION,id));
         }
@@ -78,6 +79,7 @@ public class ReaderService {
         readerAccessor.overWriteFile(readerString);
 
     }
+
 
 
 

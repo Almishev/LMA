@@ -1,12 +1,14 @@
 package com.library.book;
 
-import com.library.contract.AccessorCRUDAble;
+import com.library.contract.AddAble;
+import com.library.contract.OverwriteAble;
+import com.library.contract.ReadAble;
 
 import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BookAccessor extends AccessorCRUDAble<Book> {
+public class BookAccessor implements ReadAble , OverwriteAble, AddAble {
 
     private static final String BOOKS_FILE_PATH = "LMA/src/book.txt";
     private static final String FILE_NOT_FOUND_MESSAGE="File not found with path "+BOOKS_FILE_PATH;
