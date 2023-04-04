@@ -1,15 +1,18 @@
 package com.library.reader;
 
+import com.library.contract.OverwriteAble;
+import com.library.contract.ReadAble;
+
 import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ReaderAccessor {
+public class ReaderAccessor implements ReadAble, OverwriteAble {
 
     private static final String READERS_FILE_PATH = "LMA/src/reader.txt";
     private static final String FILE_NOT_FOUND_MESSAGE="File not found with path "+READERS_FILE_PATH;
-
-    public List<String> readAllReaders(){
+    @Override
+    public List<String> readAll(){
 
         try (BufferedReader reader= new BufferedReader(new FileReader(READERS_FILE_PATH))) {
             return reader.lines().collect(Collectors.toList());

@@ -55,6 +55,7 @@ public class BookPresenter {
         String date = validator.validatePublishYear();
 
         bookService.addBook(title,author,date);
+        System.out.println("Successful added  "+title);
 
     }
 
@@ -95,6 +96,7 @@ public class BookPresenter {
         String date = validator.validatePublishYear();
         try {
             bookService.editBook(Integer.parseInt(id),title,author,date);
+            System.out.println("Edited successful");
         } catch (ItemNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -105,6 +107,7 @@ public class BookPresenter {
         String id=validator.validateId();
         try {
             bookService.deleteBook(Integer.parseInt(id));
+            System.out.println("Deleting successful.");
         } catch (ItemNotFoundException e) {
             System.out.println(e.getMessage());
         }

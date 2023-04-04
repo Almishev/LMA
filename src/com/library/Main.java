@@ -11,9 +11,7 @@ public class Main {
 
 
     private static final String GREETINGS_MESSAGE="Please choose an option:\n"+"1: Books \n2: Readers \n3: Orders\n0: Exit";
-    private static final String PLACEHOLDER_1="Your choice is two";
-    private static final String PLACEHOLDER_2="Your choice is three";
-    private static final Scanner scanner  = new Scanner(System.in);
+
     private static final int MIN_MENU=0;
     private static final int MAX_MENU=3;
     private static final BookPresenter bookPresenter=new BookPresenter();

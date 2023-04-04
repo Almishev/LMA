@@ -1,5 +1,6 @@
 package com.library.book;
 
+import com.library.contract.DeleteAble;
 import com.library.exception.ItemNotFoundException;
 
 import java.util.ArrayList;
@@ -23,10 +24,12 @@ public class BookService {
     }
 
     public void addBook(String title, String author, String date) {
-        int id = bookAccessor.readAll().size() ;
-        Book book = new Book(id, title, author, date);
-        String bookString = bookMapper.mapBookToString(book);
-        bookAccessor.add(bookString);
+
+            int id = bookAccessor.readAll().size();
+            Book book = new Book(id, title, author, date);
+
+            String bookString = bookMapper.mapBookToString(book);
+            bookAccessor.add(bookString);
     }
 
     public void editBook(int id, String title, String author, String date) throws ItemNotFoundException {
@@ -73,7 +76,7 @@ public class BookService {
          */
     }
 
-    public void deleteBook (int id) throws ItemNotFoundException {
+    public void deleteBook(int id) throws ItemNotFoundException {
         List<Book> books = getAllBooks();
         Book bookToRemove = getBookByIDFromTheList(id, books);
         books.remove(bookToRemove);
@@ -85,11 +88,10 @@ public class BookService {
 
     }
 
-
       public Book getBookByIDFromTheList(int id, List<Book> books) throws ItemNotFoundException {
 
 
-        if (books.size() <= id || id < 1) {
+        if (books.size()+1 <= id || id < 1) {
 
             throw  new ItemNotFoundException(String.format(ID_NOT_FOUND_EXCEPTION,id));
         }

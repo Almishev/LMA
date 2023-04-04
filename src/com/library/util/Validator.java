@@ -3,7 +3,7 @@ package com.library.util;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class Validator {
+public final class Validator {
     public static final String RED="\u001B[31m";
     public static final String RESET="\u001B[0m";
     private static Pattern ID_PATTERN = Pattern.compile("^\\d{1,4}$");
@@ -17,7 +17,7 @@ public class Validator {
             System.out.println("ENTER ID ");
             bookId = sc.nextLine();
             if (!ID_PATTERN.matcher(bookId).matches()) {
-                System.out.println(RED+"SORRY ! PLEASE ENTER VALID READER ID "+RESET);
+                System.out.println(RED+"SORRY ! PLEASE ENTER VALID  ID "+RESET);
             } else {
                 break;
             }
@@ -49,10 +49,10 @@ public class Validator {
     public String validatePublishYear(){
         String date;
         while(true){
-            System.out.println("Enter Publish Year of Book ");
+            System.out.println("Enter Publish Year and date of Book ");
             date=sc.nextLine();
             if(!PublishYear_Pattern.matcher(date).matches()){
-                System.out.println(RED+"Enter valid Publish Year"+RESET);
+                System.out.println(RED+"Enter valid Publish Year and date."+RESET);
             }
             else{
                 break;

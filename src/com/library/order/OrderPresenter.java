@@ -73,19 +73,14 @@ public class OrderPresenter {
 
     public void makeANewOrder()  {
 
-        boolean isMaiden=false;
         List<Order> orders=orderService.showAllOrders();
 
         System.out.println("Please select  reader ID : ");
 
         List<Reader> readers = readerService.getAllReaders();
-        for (Reader value : readers) {
-            System.out.print(value.getReaderId() + " for " + value.getName() + ",");
-        }
-        System.out.println();
+        showReaders(readers);
 
         int readerId = ConsoleRangeReader.readInt(1,readers.size());
-
 
         Reader reader;
         try {
@@ -97,14 +92,11 @@ public class OrderPresenter {
         System.out.println("Please select book ID : ");
 
         List<Book> books = bookService.getAllBooks();
-        for (Book value : books) {
-            System.out.print(value.getBookId() + " for " + value.getTitle() + ",");
-        }
-        System.out.println();
+        showBooks(books);
 
         int bookId=ConsoleRangeReader.readInt(0,books.size());
+        boolean isMaiden=isOrderMaiden(orders,readerId,bookId);
 
-        if(orderService.isTheBookFree(bookId)) {
 
             Book book;
             try {
@@ -113,13 +105,7 @@ public class OrderPresenter {
             } catch (ItemNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            for (Order order : orders) {
-                if (order.getReader().getReaderId() == readerId && order.getBook().getBookId() == bookId) {
-                    isMaiden = true;
-                    break;
-                }
 
-            }
             if (!isMaiden) {
                 orderService.makeOrder(reader, book);
                 System.out.println("Successful accepted order.");
@@ -127,16 +113,38 @@ public class OrderPresenter {
                 System.out.println("The order already exist.");
             }
         }
-        else {
-            System.out.println("This book is still reading from somebody else.");
+
+    private void showBooks(List<Book> books) {
+        for (Book value : books) {
+            System.out.print(value.getBookId() + " for " + value.getTitle() + ",");
+        }
+        System.out.println();
+    }
+
+    private void showReaders(List<Reader> readers) {
+        for (Reader value : readers) {
+            System.out.print(value.getReaderId() + " for " + value.getName() + ",");
+        }
+        System.out.println();
+    }
+
+    private  boolean isOrderMaiden(List<Order> orders,int readerId,int bookId){
+
+            for (Order order : orders) {
+                if (order.getReader().getReaderId() == readerId && order.getBook().getBookId() == bookId) {
+                   return true;
+                }
+
+            }
+              return false;
         }
 
-    }
 
      public void deleteOrder(){
          String id=validator.validateId();
          try {
-             orderService.deleteOrder(Integer.parseInt(id)-1);
+             orderService.deleteOrder(Integer.parseInt(id));
+             System.out.println("Deleting successful.");
          } catch (ItemNotFoundException e) {
              System.out.println(e.getMessage());
          }
@@ -161,10 +169,12 @@ public class OrderPresenter {
    }
 
    public void editOrder(){
+       System.out.println("Select order ID");
        String id=validator.validateId();
+       System.out.println("Select book ID");
        String bookId=validator.validateId();
        List<Book> books = bookService.getAllBooks();
-       Book book = null;
+       Book book;
        try {
            book = bookService.getBookByIDFromTheList(Integer.parseInt(bookId),books);
        } catch (ItemNotFoundException e) {
@@ -173,6 +183,7 @@ public class OrderPresenter {
 
        try {
            orderService.editOrder(Integer.parseInt(id), book);
+           System.out.println("Edited successful.");
        } catch (ItemNotFoundException e) {
            System.out.println(e.getMessage());
        }

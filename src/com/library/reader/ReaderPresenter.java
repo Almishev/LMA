@@ -46,8 +46,8 @@ public class ReaderPresenter {
         String reader = validator.validateAuthorTitle("Reader");
         List<Reader> readers = readerService.getAllReaders();
         boolean isHere = false;
-        for (int i = 0; i < readers.size(); i++) {
-            if (readers.get(i).getName().equals(reader)) {
+        for (Reader value : readers) {
+            if (value.getName().equals(reader)) {
                 isHere = true;
                 break;
             }
@@ -83,6 +83,7 @@ public class ReaderPresenter {
 
         try {
             readerService.editReader(Integer.parseInt(id),name);
+            System.out.println("Successful edited record");
         } catch (ItemNotFoundException e) {
             System.out.println(e.getMessage());
         }
@@ -90,20 +91,21 @@ public class ReaderPresenter {
 
     }
     public void deleteReader(){
-        int max=readerService.getAllReaders().size();
         System.out.println("Input reader ID: \nDelete:");
         List<Reader> readers=readerService.getAllReaders();
         for (int i = 0; i < readers.size() ; i++) {
             System.out.println(i+1 + " for "+readers.get(i).getName() );
         }
 
-        int id= ConsoleRangeReader.readInt(1,max);
+        int id= Integer.parseInt(validator.validateId());
+
         try {
             readerService.deleteReader(id);
+
+            System.out.println("Deleting successful");
         } catch (ItemNotFoundException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("Deleting successful");
 
     }
 }
